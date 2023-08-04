@@ -58,7 +58,7 @@ def save_variable(variable, force=False):
         if not force and os.path.isfile(export_path):
             continue
         pdf.to_csv(export_path, index=False)
-        pbar.set_description("Saved to: %s" % export_path)
+        pbar.set_description("Saved to: %s" % export_path)lack
 
 
 if __name__ == "__main__":
