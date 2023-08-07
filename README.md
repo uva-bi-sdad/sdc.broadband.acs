@@ -1,6 +1,19 @@
 # sdc.broadband.acs
 
+## Graph
+```mermaid
+graph LR;
+  year=2021-->ACS;
+  ACS--B19013_001--->markdown["MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS <br/>(IN 2021 INFLATION-ADJUSTED DOLLARS)"];
+  ACS--B28002_001--->markdown1["PRESENCE AND TYPES OF INTERNET <br/> SUBSCRIPTIONS IN HOUSEHOLD"];
+  ACS--B28001_002--->markdown2["Estimate!!Total:!!<br/>Has one or more types of computing devices:"];
+  ACS--B28002_013--->markdown3["Estimate!!Total:!!No Internet access"];
+  ACS--B28002_004--->markdown4["Estimate!!Total:!!<br/>With an Internet subscription!!Broadband of any type"];
+  ACS--B28002_007--->markdown5["Estimate!!Total:!!With an Internet subscription!!</br>Broadband such as cable, fiber optic or DSL"];
+```
+  
 ## General notes
+- Can check for the variable descriptions [here](https://api.census.gov/data/2021/acs/acs1/groups/B28002.html)
 - Different ACS estimate annotation value:
 
 | Estimate Value | Annotation Value | Meaning |
