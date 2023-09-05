@@ -6,9 +6,11 @@ import pathlib
 import os
 from tqdm import tqdm
 from decouple import Config, RepositoryEnv
+from slugify import slugify
 
 config = Config(RepositoryEnv(".env"))
-c = Census(config("CENSUS_API_KEY"), year=2021)
+YEAR = 2021
+c = Census(config("CENSUS_API_KEY"), year=YEAR)
 
 
 def extract_acs_variables(variable, states):
@@ -44,17 +46,31 @@ def extract_acs_variables(variable, states):
 def save_variable(variable, force=False):
     # Look for variable descriptions here: https://api.census.gov/data/2021/acs/acs5/variables.html
 
-    data_dir = "../../data/distribution/" + variable
+    data_dir = "../../data/distribution/"
     os.system("mkdir -p %s" % data_dir)  # Make a directory if it does not exist
     assert os.path.isdir(data_dir)
     assert variable is not None
-    df = extract_acs_variables(variable, [states.AL.fips, states.GA.fips])
+    df = extract_acs_variables(
+        variable,
+        [
+            states.AL.fips,
+            states.GA.fips,
+            states.VA.fips,
+            states.DC.fips,
+            states.MD.fips,
+        ],
+    )
 
     counties = sorted(df["GEOID21"].str[:5].unique())
     pbar = tqdm(counties)
     for county in pbar:
         pdf = df[df["GEOID21"].str[:5] == county]
-        export_path = os.path.join(data_dir, "{county}.csv.xz".format(county=county))
+        export_path = os.path.join(
+            data_dir,
+            "{year}_{county}_{variable}.csv.xz".format(
+                year=YEAR, variable=slugify(variable, "-").lower(), county=county
+            ),
+        )
         if not force and os.path.isfile(export_path):
             continue
         pdf.to_csv(export_path, index=False)
