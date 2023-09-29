@@ -1,0 +1,9 @@
+{
+    "DATA_PATH_PATTERN": "**/data/distribution/*.csv.xz",
+    "REQUIRED_COL_NAMES": [
+        "GEOID21"
+    ],
+    "GEOID_COLS": [
+        "GEOID21"
+    ]
+}

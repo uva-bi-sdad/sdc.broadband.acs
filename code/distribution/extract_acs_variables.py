@@ -7,10 +7,7 @@ import os
 from tqdm import tqdm
 from decouple import Config, RepositoryEnv
 from slugify import slugify
-<<<<<<< HEAD:code/distribution/extract_acs_variable.py
-=======
 import requests
->>>>>>> fcd3f30fcbe6b7db79cfe615b466121f7202c890:code/distribution/extract_acs_variables.py
 
 config = Config(RepositoryEnv(".env"))
 YEAR = 2021
@@ -57,11 +54,7 @@ def extract_acs_variables(variable, states):
 def save_variable(variable, force=False):
     # Look for variable descriptions here: https://api.census.gov/data/2021/acs/acs5/variables.html
 
-<<<<<<< HEAD:code/distribution/extract_acs_variable.py
-    data_dir = "../../data/distribution/"
-=======
     data_dir = "../../data/distribution/"  # + variable
->>>>>>> fcd3f30fcbe6b7db79cfe615b466121f7202c890:code/distribution/extract_acs_variables.py
     os.system("mkdir -p %s" % data_dir)  # Make a directory if it does not exist
     assert os.path.isdir(data_dir)
     assert variable is not None
@@ -79,13 +72,6 @@ def save_variable(variable, force=False):
     counties = sorted(df["geoid"].str[:5].unique())
     pbar = tqdm(counties)
     for county in pbar:
-<<<<<<< HEAD:code/distribution/extract_acs_variable.py
-        pdf = df[df["GEOID21"].str[:5] == county]
-        export_path = os.path.join(
-            data_dir,
-            "{year}_{county}_{variable}.csv.xz".format(
-                year=YEAR, variable=slugify(variable, "-").lower(), county=county
-=======
         pdf = df[df["geoid"].str[:5] == county]
         value_vars = list(df.columns)
         value_vars.remove("geoid")
@@ -97,7 +83,6 @@ def save_variable(variable, force=False):
             data_dir,
             "{year}_fips-{county}_measure-acs-{variable}_rows-{row_count}.csv.xz".format(
                 year=YEAR, county=county, variable=slugify(variable), row_count=len(pdf)
->>>>>>> fcd3f30fcbe6b7db79cfe615b466121f7202c890:code/distribution/extract_acs_variables.py
             ),
         )
         if not force and os.path.isfile(export_path):
